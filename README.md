@@ -4,7 +4,6 @@ Long-term memory for AI agents, exposed over the Model Context Protocol (MCP).
 
 LLM agents are stateless: every new session starts from zero, because the context window disappears when the conversation ends. This server gives any MCP client (Claude Desktop, a LangGraph agent, the MCP Inspector) a persistent memory it can save to, search, list, and forget from. Memories survive across conversations, server restarts, and clients.
 
-![Demo](docs/demo.gif)
 
 ## Architecture
 
