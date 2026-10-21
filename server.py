@@ -28,23 +28,25 @@ def save_memory(
 def search_memory(
     query: Annotated[str, Field(min_length=1, description="One short keyword, e.g. 'food' or 'python'.")],
     limit: Annotated[int, Field(ge=1, le=20)] = 5,
-) -> list[dict]:
+) -> dict:
     """Search long-term memory for information saved in past conversations.
 
     Call this before answering questions about the user's preferences,
     background, or past decisions. Search with one short keyword at a
     time, not a full sentence.
     """
-    return storage.search_memories(query, limit)
+    results = storage.search_memories(query, limit)
+    return {"count": len(results), "memories": results}
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
-def list_memories(limit: Annotated[int, Field(ge=1, le=50)] = 20) -> list[dict]:
+def list_memories(limit: Annotated[int, Field(ge=1, le=50)] = 20) -> dict:
     """List the most recent memories, newest first.
 
     Use this when the user asks what you remember about them.
     """
-    return storage.list_memories(limit)
+    results = storage.list_memories(limit)
+    return {"count": len(results), "memories": results}
 
 
 @mcp.tool(annotations=ToolAnnotations(destructiveHint=True))
